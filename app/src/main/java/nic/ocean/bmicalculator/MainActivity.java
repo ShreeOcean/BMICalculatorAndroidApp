@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView tvResult,tvSuggestion;
     EditText etHeight,etWeight;
-    Button btnCalculate;
+    Button btnCalculate,btnClear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +25,15 @@ public class MainActivity extends AppCompatActivity {
 
         tvResult = findViewById(R.id.tvResult);
         tvSuggestion = findViewById(R.id.tvSuggestion);
+        btnClear = findViewById(R.id.btnClear);
 
         findViewById(R.id.btnCalculate).setOnClickListener(new View.OnClickListener() {
 
             //logic for validation, input can't be empty
             @Override
             public void onClick(View view) {
+
+                btnClear.setVisibility(View.VISIBLE);
 
                 String height = etHeight.getText().toString();
                 String weight = etWeight.getText().toString();
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(TextUtils.isEmpty(weight)){
+                else if(TextUtils.isEmpty(weight)){
                     etWeight.setError("PLEASE ENTER YOUR WEIGHT");
                     etWeight.requestFocus();
                     return;
@@ -58,6 +61,18 @@ public class MainActivity extends AppCompatActivity {
                 String bmiInterpretation = interpretBMI(bmiValue);
 
                 tvResult.setText(String.valueOf(bmiValue + "-" + bmiInterpretation));
+            }
+        });
+
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvResult.setText(null);
+                tvSuggestion.setText(null);
+                etWeight.setText(null);
+                etHeight.setText(null);
+
+                btnClear.setVisibility(View.GONE);
             }
         });
 
@@ -91,4 +106,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
 }

@@ -42,9 +42,12 @@
         android:layout_marginTop="40dp"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"        android:hint="Enter Weight in kg"
+        android:layout_marginRight="20dp"
+        android:hint="Enter Weight in kg"
         android:textAlignment="center"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etHeight" />
 
     <Button
@@ -62,28 +65,42 @@
         app:layout_constraintTop_toBottomOf="@+id/etWeight" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="40dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="40dp"
         android:layout_marginRight="20dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnCalculate">
 
         <TextView
             android:id="@+id/tvResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:textSize="30sp" />
+
         <TextView
             android:id="@+id/tvSuggestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
             android:layout_marginTop="10dp"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/btnClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CLEAR"
+            android:visibility="gone"
+            android:layout_margin="20dp"
+            android:layout_gravity="center"/>
     </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
