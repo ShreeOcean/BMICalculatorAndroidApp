@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     RadioGroup rg_gender;
     RadioButton rb_gender;
     Context context;
+    String gender = " ";
 
 
     @Override
@@ -132,14 +134,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
-
-        if (radioGroup.getCheckedRadioButtonId() == -1){
-            Toast.makeText(context, "Select your Gender !!!", Toast.LENGTH_SHORT).show();
-        }
-        else {
+//        if (radioGroup.getCheckedRadioButtonId() == -1){
+//            Toast.makeText(context, "Select your Gender !!!", Toast.LENGTH_SHORT).show();
+//        }
+        //Log.d("check radiobtn id :", "onCheckedChanged: " + i);
             rb_gender = findViewById(i);
-            Toast.makeText(context, rb_gender.getText().toString(), Toast.LENGTH_SHORT).show();
-        }
+            gender = rb_gender.getText().toString();
+            Toast.makeText(context, gender, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -166,6 +168,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     etWeight.requestFocus();
                     return;
                 }
+                else if (TextUtils.isEmpty(gender)){
+                    Toast.makeText(context, "Select your gender !!!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
 
                 //get the user value from the widget reference
@@ -178,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //Define the meaning of the bmi value
                 String bmiInterpretation = interpretBMI(bmiValue);
 
-                tvResult.setText(String.valueOf(" Gender : " + rb_gender.getText().toString() + " Your BMI value is "+ bmiValue + "-" + bmiInterpretation ));
+                tvResult.setText(String.valueOf(" Gender : " + gender + " Your BMI value is "+ bmiValue + "-" + bmiInterpretation ));
 
                 break;
 
