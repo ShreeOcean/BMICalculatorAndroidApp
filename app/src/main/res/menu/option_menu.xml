@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/aboutAppMenuItem"
+        android:title="About App"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/about_icon"/>
+    <item
+        android:id="@+id/bmiChartMenuItem"
+        android:icon="@drawable/charticon"
+        app:showAsAction="ifRoom"
+        android:title="BMI Chart" />
+    <item
+        android:id="@+id/exitMenuItem"
+        android:icon="@drawable/exit_icon"
+        android:title="Exit" />
+    <item
+        android:id="@+id/menuAboutDev"
+        android:title="About Developer"/>
+</menu>
