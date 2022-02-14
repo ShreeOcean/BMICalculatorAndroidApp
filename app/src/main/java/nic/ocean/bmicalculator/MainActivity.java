@@ -1,45 +1,28 @@
 package nic.ocean.bmicalculator;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import nic.ocean.bmicalculator.databinding.AboutAppPopupBinding;
-import nic.ocean.bmicalculator.databinding.ActivityMainBinding;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     TextView tvResult,tvSuggestion;
     EditText etHeight,etWeight;
-    Button btnCalculate,btnClear, btnGotIt, btnGotItBmiChart;
+    Button btnCalculate,btnClear;
     RadioGroup rg_gender;
+    RadioButton rb_gender;
     Context context;
-    private String gender = "";
-    ImageButton btnCross;
-
-    private AlertDialog.Builder dialogBuilder;
-    private  AlertDialog dialog;
-
-//    private ActivityMainBinding activityMainBinding;
-//    private AboutAppPopupBinding aboutAppPopupBinding;
 
 
     @Override
@@ -60,9 +43,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rg_gender.setOnCheckedChangeListener(this);
         btnCalculate.setOnClickListener(this);
         btnClear.setOnClickListener(this);
-
-//        aboutAppPopupBinding = AboutAppPopupBinding.inflate(getLayoutInflater());
-//        setContentView(aboutAppPopupBinding.getRoot());
 
 //        findViewById(R.id.btnCalculate).setOnClickListener(new View.OnClickListener() {
 //
@@ -118,51 +98,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    //adding menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.option_menu, menu);
-        return true;
-    }
-
-    //option menu item selected code
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()){
-            case R.id.aboutAppMenuItem:
-                createNewAboutAppDialog();
-                break;
-            case R.id.bmiChartMenuItem:
-                createAboutBMIChart();
-                break;
-            case R.id.exitMenuItem:
-                finish();
-                break;
-            case R.id.menuAboutDev:
-
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void createAboutBMIChart() {
-
-        dialogBuilder = new AlertDialog.Builder(this);
-        final View aboutBMIChart = getLayoutInflater().inflate(R.layout.about_bmi_chart, null);
-
-        dialogBuilder.setView(aboutBMIChart);
-        dialog = dialogBuilder.create();
-        dialog.show();
-        btnCross = aboutBMIChart.findViewById(R.id.imageBtnClose);
-
-        btnGotItBmiChart = aboutBMIChart.findViewById(R.id.btnGotItBmiChart);
-        btnGotItBmiChart.setOnClickListener(view -> dialog.dismiss());
-        btnCross.setOnClickListener(view -> dialog.dismiss());
-
-    }
-
     //method to calculate bmi value
     private float calculateBMI(float weightF, float heightF) {
 
@@ -194,28 +129,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-//    @Override
-//    public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-////        if (radioGroup.getCheckedRadioButtonId() == -1){
-////            Toast.makeText(context, "Select your Gender !!!", Toast.LENGTH_SHORT).show();
-////        }
-//
-//        RadioButton radioButton = findViewById(checkedId);
-//            //rb_gender = findViewById(i);
-//            gender = radioButton.getText().toString();
-//            Toast.makeText(context, gender, Toast.LENGTH_SHORT).show();
-//
-//    }
-
+    //
     @Override
-    public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
 
-        Log.d("onCheckedChanged(RG)", "onCheckedChanged: " + checkedId);
-        RadioButton radioButton = findViewById(checkedId);
-        if(radioButton == null)return;
-        //Toast.makeText(context, radioButton.getText().toString(), Toast.LENGTH_SHORT).show();
-        gender = radioButton.getText().toString();
-
+        if (radioGroup.getCheckedRadioButtonId() == -1){
+            Toast.makeText(context, "Select your Gender !!!", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            rb_gender = findViewById(i);
+            Toast.makeText(context, rb_gender.getText().toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -242,10 +166,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     etWeight.requestFocus();
                     return;
                 }
-                else if (TextUtils.isEmpty(gender)){
-                    Toast.makeText(context, "Select your gender !!!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
 
 
                 //get the user value from the widget reference
@@ -258,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //Define the meaning of the bmi value
                 String bmiInterpretation = interpretBMI(bmiValue);
 
-                tvResult.setText(String.valueOf(" Gender : " + gender + " Your BMI value is "+ bmiValue + "-" + bmiInterpretation ));
+                tvResult.setText(String.valueOf(" Gender : " + rb_gender.getText().toString() + " Your BMI value is "+ bmiValue + "-" + bmiInterpretation ));
 
                 break;
 
@@ -268,34 +188,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 tvSuggestion.setText(null);
                 etWeight.setText(null);
                 etHeight.setText(null);
-
-//                if (rb_gender.isChecked()) {
-//                    // If the button was already checked, uncheck them all
-//                    rg_gender.clearCheck();
-//                    // Prevent the system from re-checking it
-//                    return ;
-//                }
-
                 rg_gender.clearCheck();
                 btnClear.setVisibility(View.GONE);
 
                 break;
         }
-    }
-
-    public void createNewAboutAppDialog(){
-
-        dialogBuilder = new AlertDialog.Builder(this);
-        final View aboutAppPopupView = getLayoutInflater().inflate(R.layout.about_app_popup, null);
-
-        btnGotIt = aboutAppPopupView.findViewById(R.id.btnGotIt);
-        btnCross = aboutAppPopupView.findViewById(R.id.imageBtnClose);
-
-        dialogBuilder.setView(aboutAppPopupView);
-        dialog = dialogBuilder.create();
-        dialog.show();
-
-        btnGotIt.setOnClickListener(view -> dialog.dismiss());
-        btnCross.setOnClickListener(view -> dialog.dismiss());
     }
 }
