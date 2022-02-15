@@ -14,10 +14,11 @@
         app:showAsAction="ifRoom"
         android:title="BMI Chart" />
     <item
+        android:id="@+id/menuAboutDev"
+        android:title="About Developer"/>
+    <item
         android:id="@+id/exitMenuItem"
         android:icon="@drawable/exit_icon"
         android:title="Exit" />
-    <item
-        android:id="@+id/menuAboutDev"
-        android:title="About Developer"/>
+
 </menu>

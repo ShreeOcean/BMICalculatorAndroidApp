@@ -1,14 +1,21 @@
 package nic.ocean.bmicalculator;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
@@ -17,12 +24,18 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
-    TextView tvResult,tvSuggestion;
+    TextView tvGender,tvResultBmi,tvSuggestion, tvAboutApp, tvAboutBmiChart;
+    ImageButton cross;
+    ImageView imageViewAppIcon, imageViewBmiChart;
     EditText etHeight,etWeight;
-    Button btnCalculate,btnClear;
+    Button btnCalculate,btnClear, btnGotIt;
     RadioGroup rg_gender;
     RadioButton rb_gender;
     Context context;
+
+    private AlertDialog.Builder dialogBuilder;
+    private AlertDialog alertDialog;
+
 
 
     @Override
@@ -34,7 +47,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         etHeight = findViewById(R.id.etHeight);
         etWeight = findViewById(R.id.etWeight);
 
-        tvResult = findViewById(R.id.tvResult);
+        tvGender = findViewById(R.id.tvGender);
+        tvResultBmi = findViewById(R.id.tvResultBmi);
         tvSuggestion = findViewById(R.id.tvSuggestion);
         btnClear = findViewById(R.id.btnClear);
         btnCalculate = findViewById(R.id.btnCalculate);
@@ -44,58 +58,105 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnCalculate.setOnClickListener(this);
         btnClear.setOnClickListener(this);
 
-//        findViewById(R.id.btnCalculate).setOnClickListener(new View.OnClickListener() {
-//
-//            //logic for validation, input can't be empty
+    }
+
+    //adding menu cade
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.option_menu,menu);
+        return true;
+    }
+    //on option item selected from menu
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        switch (itemId){
+            case R.id.aboutAppMenuItem:
+                aboutAppMenuOnClick();
+                break;
+            case R.id.menuAboutDev:
+                aboutDeveloperMenu();
+                break;
+            case R.id.bmiChartMenuItem:
+                aboutBmiChartMenu();
+                break;
+            case R.id.exitMenuItem:
+                exitMenuOption();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void exitMenuOption() {
+
+        dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setTitle("Exit Application?");
+        dialogBuilder
+                .setMessage("Click yes to exit!")
+                .setCancelable(false)
+                .setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                moveTaskToBack(true);
+                                android.os.Process.killProcess(android.os.Process.myPid());
+                                System.exit(1);
+                            }
+                        })
+
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
+    }
+
+    private void aboutBmiChartMenu() {
+
+        dialogBuilder = new AlertDialog.Builder(this);
+        final View  aboutBMIChartMenu = getLayoutInflater().inflate(R.layout.about_bmi_chart, null);
+        cross = aboutBMIChartMenu.findViewById(R.id.imageBtnClose);
+        btnGotIt = aboutBMIChartMenu.findViewById(R.id.btnGotIt);
+        dialogBuilder.setView(aboutBMIChartMenu);
+        alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
+//        cross.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//
-//                btnClear.setVisibility(View.VISIBLE);
-//
-//                String height = etHeight.getText().toString();
-//                String weight = etWeight.getText().toString();
-//
-//                //error warning for empty input in height edit text
-//                if(TextUtils.isEmpty(height)){
-//                    etHeight.setError("PLEASE ENTER YOUR HEIGHT");
-//                    etHeight.requestFocus();
-//                    return;
-//                }
-//                //error warning for empty input in weight edit text
-//                else if(TextUtils.isEmpty(weight)){
-//                    etWeight.setError("PLEASE ENTER YOUR WEIGHT");
-//                    etWeight.requestFocus();
-//                    return;
-//                }
-//
-//
-//                //get the user value from the widget reference
-//                float heightF = Float.parseFloat(height)/100;
-//                float weightF = Float.parseFloat(weight);
-//
-//                //calculate BMI value
-//                float bmiValue = calculateBMI(weightF,heightF);
-//
-//                //Define the meaning of the bmi value
-//                String bmiInterpretation = interpretBMI(bmiValue);
-//
-//                tvResult.setText(String.valueOf(" Gender :" + rb_gender.getText().toString() + " Your BMI value is "+ bmiValue + "-" + bmiInterpretation ));
+//                alertDialog.dismiss();
 //            }
 //        });
-
-//        btnClear.setOnClickListener(new View.OnClickListener() {
+//        btnGotIt.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//                tvResult.setText(null);
-//                tvSuggestion.setText(null);
-//                etWeight.setText(null);
-//                etHeight.setText(null);
-//                rg_gender.clearCheck();
-//
-//                btnClear.setVisibility(View.GONE);
+//                alertDialog.dismiss();
 //            }
 //        });
+    }
 
+    private void aboutDeveloperMenu() {
+        dialogBuilder = new AlertDialog.Builder(this);
+        final View  aboutDevMenu = getLayoutInflater().inflate(R.layout.about_developer_menu, null);
+        dialogBuilder.setView(aboutDevMenu);
+        alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
+
+
+    }
+
+    private void aboutAppMenuOnClick() {
+        dialogBuilder = new AlertDialog.Builder(this);
+        final View  aboutAppMenu = getLayoutInflater().inflate(R.layout.about_app_popup, null);
+        dialogBuilder.setView(aboutAppMenu);
+        alertDialog = dialogBuilder.create();
+        alertDialog.show();
     }
 
     //method to calculate bmi value
@@ -177,17 +238,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 //Define the meaning of the bmi value
                 String bmiInterpretation = interpretBMI(bmiValue);
-
-                tvResult.setText(String.valueOf(" Gender : " + rb_gender.getText().toString() + " Your BMI value is "+ bmiValue + "-" + bmiInterpretation ));
-
+                tvGender.setText(" Gender : " + rb_gender.getText().toString());
+                tvResultBmi.setText(String.valueOf( " Your BMI value is "+ bmiValue ));
+                tvSuggestion.setText(bmiInterpretation);
                 break;
 
             //button clear click event
             case R.id.btnClear:
-                tvResult.setText(null);
-                tvSuggestion.setText(null);
-                etWeight.setText(null);
-                etHeight.setText(null);
+                tvGender.setText("");
+                tvResultBmi.setText("");
+                tvSuggestion.setText("");
+                etWeight.setText("");
+                etHeight.setText("");
                 rg_gender.clearCheck();
                 btnClear.setVisibility(View.GONE);
 
