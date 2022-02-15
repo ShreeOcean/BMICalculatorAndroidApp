@@ -19,16 +19,19 @@
         app:srcCompat="@drawable/iconscross" />
 
 
+<!--    <de.hdodenhof.circleimageview.CircleImageView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"/>-->
+
     <ImageView
         android:id="@+id/imageView_dev"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_marginTop="70dp"
-        android:background="@drawable/round_outline"
+        android:background="@drawable/img"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_dev_name"

@@ -121,23 +121,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialogBuilder = new AlertDialog.Builder(this);
         final View  aboutBMIChartMenu = getLayoutInflater().inflate(R.layout.about_bmi_chart, null);
         cross = aboutBMIChartMenu.findViewById(R.id.imageBtnClose);
-        btnGotIt = aboutBMIChartMenu.findViewById(R.id.btnGotIt);
+        btnGotIt = aboutBMIChartMenu.findViewById(R.id.btnGotItBmiChart);
         dialogBuilder.setView(aboutBMIChartMenu);
         alertDialog = dialogBuilder.create();
         alertDialog.show();
 
-//        cross.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                alertDialog.dismiss();
-//            }
-//        });
-//        btnGotIt.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                alertDialog.dismiss();
-//            }
-//        });
+        cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        btnGotIt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 
     private void aboutDeveloperMenu() {
@@ -147,7 +147,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alertDialog = dialogBuilder.create();
         alertDialog.show();
 
+        cross = aboutDevMenu.findViewById(R.id.imageBtnClose);
 
+        cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
 
     }
 
@@ -157,6 +164,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialogBuilder.setView(aboutAppMenu);
         alertDialog = dialogBuilder.create();
         alertDialog.show();
+
+        cross = aboutAppMenu.findViewById(R.id.imageBtnClose);
+        btnGotIt = aboutAppMenu.findViewById(R.id.btnGotIt);
+
+        cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        btnGotIt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 
     //method to calculate bmi value
