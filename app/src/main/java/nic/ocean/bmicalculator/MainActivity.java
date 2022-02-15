@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -22,6 +23,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import nic.ocean.bmicalculator.databinding.ActivityMainBinding;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     TextView tvGender,tvResultBmi,tvSuggestion, tvAboutApp, tvAboutBmiChart;
@@ -35,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog alertDialog;
-
+    private ActivityMainBinding bindingMain;
 
 
     @Override
@@ -141,45 +144,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void aboutDeveloperMenu() {
-        dialogBuilder = new AlertDialog.Builder(this);
-        final View  aboutDevMenu = getLayoutInflater().inflate(R.layout.about_developer_menu, null);
-        dialogBuilder.setView(aboutDevMenu);
-        alertDialog = dialogBuilder.create();
-        alertDialog.show();
 
-        cross = aboutDevMenu.findViewById(R.id.imageBtnClose);
-
-        cross.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-            }
-        });
+        Intent intent = new Intent(this, AboutDev.class);
+        startActivity(intent);
+//        dialogBuilder = new AlertDialog.Builder(this);
+//        final View  aboutDevMenu = getLayoutInflater().inflate(R.layout.about_developer_menu, null);
+//        dialogBuilder.setView(aboutDevMenu);
+//        alertDialog = dialogBuilder.create();
+//        alertDialog.show();
+//
+//        cross = aboutDevMenu.findViewById(R.id.imageBtnClose);
+//
+//        cross.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                alertDialog.dismiss();
+//            }
+//        });
 
     }
 
     private void aboutAppMenuOnClick() {
-        dialogBuilder = new AlertDialog.Builder(this);
-        final View  aboutAppMenu = getLayoutInflater().inflate(R.layout.about_app_popup, null);
-        dialogBuilder.setView(aboutAppMenu);
-        alertDialog = dialogBuilder.create();
-        alertDialog.show();
 
-        cross = aboutAppMenu.findViewById(R.id.imageBtnClose);
-        btnGotIt = aboutAppMenu.findViewById(R.id.btnGotIt);
-
-        cross.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-            }
-        });
-        btnGotIt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-            }
-        });
+        Intent intent = new Intent(this, AboutApp.class);
+        startActivity(intent);
+//        dialogBuilder = new AlertDialog.Builder(this);
+//        final View  aboutAppMenu = getLayoutInflater().inflate(R.layout.about_app_popup, null);
+//        dialogBuilder.setView(aboutAppMenu);
+//        alertDialog = dialogBuilder.create();
+//        alertDialog.show();
+//
+//        cross = aboutAppMenu.findViewById(R.id.imageBtnClose);
+//        btnGotIt = aboutAppMenu.findViewById(R.id.btnGotIt);
+//
+//        cross.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                alertDialog.dismiss();
+//            }
+//        });
+//        btnGotIt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                alertDialog.dismiss();
+//            }
+//        });
     }
 
     //method to calculate bmi value
