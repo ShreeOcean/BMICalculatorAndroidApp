@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     RadioGroup rg_gender;
     RadioButton rb_gender;
     Context context;
+    private String gender = "";
 
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog alertDialog;
@@ -123,7 +124,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         dialogBuilder = new AlertDialog.Builder(this);
         final View  aboutBMIChartMenu = getLayoutInflater().inflate(R.layout.about_bmi_chart, null);
-        cross = aboutBMIChartMenu.findViewById(R.id.imageBtnClose);
+        //
+        // cross = aboutBMIChartMenu.findViewById(R.id.imageBtnClose);
         btnGotIt = aboutBMIChartMenu.findViewById(R.id.btnGotItBmiChart);
         dialogBuilder.setView(aboutBMIChartMenu);
         alertDialog = dialogBuilder.create();
@@ -226,13 +228,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
 
-        if (radioGroup.getCheckedRadioButtonId() == -1){
-            Toast.makeText(context, "Select your Gender !!!", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            rb_gender = findViewById(i);
-            Toast.makeText(context, rb_gender.getText().toString(), Toast.LENGTH_SHORT).show();
-        }
+//        if (radioGroup.getCheckedRadioButtonId() == -1){
+//            Toast.makeText(context, "Select your Gender !!!", Toast.LENGTH_SHORT).show();
+//        }
+//        else {
+//            rb_gender = findViewById(i);
+//            Toast.makeText(context, rb_gender.getText().toString(), Toast.LENGTH_SHORT).show();
+//        }
+        rb_gender = findViewById(i);
+//        Toast.makeText(context, radioButton.getText().toString(), Toast.LENGTH_SHORT).show();
+        if (rb_gender == null)return;
+        gender = rb_gender.getText().toString();
     }
 
     @Override
@@ -241,8 +247,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (id){
             //button calculate bmi click event
             case R.id.btnCalculate:
-
-                btnClear.setVisibility(View.VISIBLE);
 
                 String height = etHeight.getText().toString();
                 String weight = etWeight.getText().toString();
@@ -259,20 +263,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     etWeight.requestFocus();
                     return;
                 }
+                else if (gender.isEmpty()){
+                    Toast.makeText(context, "PLEASE SELECT YOUR GENDER", Toast.LENGTH_SHORT).show();
+                }
+                else {
+
+                    btnClear.setVisibility(View.VISIBLE);
+
+                    //get the user value from the widget reference
+                    float heightF = Float.parseFloat(height)/100;
+                    float weightF = Float.parseFloat(weight);
+
+                    //calculate BMI value
+                    float bmiValue = calculateBMI(weightF,heightF);
+
+                    //Define the meaning of the bmi value
+                    String bmiInterpretation = interpretBMI(bmiValue);
+                    tvGender.setText(" Gender : " + gender);
+                    tvResultBmi.setText(String.valueOf( " Your BMI value is "+ bmiValue ));
+                    tvSuggestion.setText(bmiInterpretation);
+                }
 
 
-                //get the user value from the widget reference
-                float heightF = Float.parseFloat(height)/100;
-                float weightF = Float.parseFloat(weight);
-
-                //calculate BMI value
-                float bmiValue = calculateBMI(weightF,heightF);
-
-                //Define the meaning of the bmi value
-                String bmiInterpretation = interpretBMI(bmiValue);
-                tvGender.setText(" Gender : " + rb_gender.getText().toString());
-                tvResultBmi.setText(String.valueOf( " Your BMI value is "+ bmiValue ));
-                tvSuggestion.setText(bmiInterpretation);
                 break;
 
             //button clear click event
@@ -282,7 +294,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 tvSuggestion.setText("");
                 etWeight.setText("");
                 etHeight.setText("");
-                rg_gender.clearCheck();
+                if (rb_gender.isChecked()){
+                    rg_gender.clearCheck();
+                }
+
                 btnClear.setVisibility(View.GONE);
 
                 break;
