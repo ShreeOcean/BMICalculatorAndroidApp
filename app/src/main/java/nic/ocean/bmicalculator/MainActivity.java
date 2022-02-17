@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private AlertDialog alertDialog;
     private ActivityMainBinding bindingMain;
 
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
+    //double back press to exit
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
+
     //adding menu cade
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,13 +100,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int itemId = item.getItemId();
         switch (itemId){
             case R.id.aboutAppMenuItem:
-                aboutAppMenuOnClick();
+                Intent intentAboutApp = new Intent(MainActivity.this, AboutApp.class);
+                startActivity(intentAboutApp);
+//                aboutAppMenuOnClick();
                 break;
             case R.id.menuAboutDev:
-                aboutDeveloperMenu();
+                Intent intentAboutDev = new Intent(MainActivity.this, AboutDev.class);
+                startActivity(intentAboutDev);
+                //aboutDeveloperMenu();
                 break;
             case R.id.bmiChartMenuItem:
-                aboutBmiChartMenu();
+                Intent intent = new Intent(MainActivity.this, AboutBMIChart.class);
+                startActivity(intent);
+                //aboutBmiChartMenu();
+                break;
+            case R.id.menuContactUs:
+                Intent intentConUs = new Intent(MainActivity.this,MenuContactUs.class);
+                startActivity(intentConUs);
                 break;
             case R.id.exitMenuItem:
                 exitMenuOption();
@@ -122,33 +155,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void aboutBmiChartMenu() {
 
-        dialogBuilder = new AlertDialog.Builder(this);
-        final View  aboutBMIChartMenu = getLayoutInflater().inflate(R.layout.about_bmi_chart, null);
-        //
-        // cross = aboutBMIChartMenu.findViewById(R.id.imageBtnClose);
-        btnGotIt = aboutBMIChartMenu.findViewById(R.id.btnGotItBmiChart);
-        dialogBuilder.setView(aboutBMIChartMenu);
-        alertDialog = dialogBuilder.create();
-        alertDialog.show();
+//        dialogBuilder = new AlertDialog.Builder(this);
+//        final View  aboutBMIChartMenu = getLayoutInflater().inflate(R.layout.about_bmi_chart, null);
+//        //
+//        // cross = aboutBMIChartMenu.findViewById(R.id.imageBtnClose);
+//        btnGotIt = aboutBMIChartMenu.findViewById(R.id.btnGotItBmiChart);
+//        dialogBuilder.setView(aboutBMIChartMenu);
+//        alertDialog = dialogBuilder.create();
+//        alertDialog.show();
 
-        cross.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-            }
-        });
-        btnGotIt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-            }
-        });
+//        Intent intent = new Intent(MainActivity.this, AboutBMIChart.class);
+//        startActivity(intent);
+
+//        cross.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                alertDialog.dismiss();
+//            }
+//        });
+//        btnGotIt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                alertDialog.dismiss();
+//            }
+//        });
     }
 
     private void aboutDeveloperMenu() {
 
-        Intent intent = new Intent(this, AboutDev.class);
-        startActivity(intent);
+
 //        dialogBuilder = new AlertDialog.Builder(this);
 //        final View  aboutDevMenu = getLayoutInflater().inflate(R.layout.about_developer_menu, null);
 //        dialogBuilder.setView(aboutDevMenu);
@@ -168,9 +203,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void aboutAppMenuOnClick() {
 
-        Intent intent = new Intent(this, AboutApp.class);
-        startActivity(intent);
-//        dialogBuilder = new AlertDialog.Builder(this);
+
+
+
+////        dialogBuilder = new AlertDialog.Builder(this);
 //        final View  aboutAppMenu = getLayoutInflater().inflate(R.layout.about_app_popup, null);
 //        dialogBuilder.setView(aboutAppMenu);
 //        alertDialog = dialogBuilder.create();
@@ -200,6 +236,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     //method to show interpret bmi msg
+    @NonNull
     private String interpretBMI(float bmiValue) {
 
         if(bmiValue < 16){
@@ -303,4 +340,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
 }

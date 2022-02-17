@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="nic.ocean.bmicalculator">
 
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BMIcalculator">
+        <activity
+            android:name=".MenuContactUs"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -18,8 +24,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AboutApp"/>
-        <activity android:name=".AboutDev"/>
+        <activity android:name=".AboutApp"
+            android:exported="false" />
+        <activity android:name=".AboutDev"
+            android:exported="false" />
+        <activity android:name=".AboutBMIChart"
+            android:exported="false" />
     </application>
 
 </manifest>

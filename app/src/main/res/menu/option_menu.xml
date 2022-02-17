@@ -5,20 +5,32 @@
 
     <item
         android:id="@+id/aboutAppMenuItem"
+        android:icon="@drawable/ic_baseline_info_24"
+        android:iconTint="@color/white"
         android:title="About App"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/about_icon"/>
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/homeMenu"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Home"
+        android:iconTint="@color/black"/>
     <item
         android:id="@+id/bmiChartMenuItem"
-        android:icon="@drawable/charticon"
-        app:showAsAction="ifRoom"
-        android:title="BMI Chart" />
+        android:icon="@drawable/ic_baseline_bar_chart_24"
+        android:iconTint="@color/white"
+        android:title="BMI Chart"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menuAboutDev"
-        android:title="About Developer"/>
+        android:title="About Developer"
+        android:icon="@drawable/ic_baseline_insert_emoticon_24"
+        android:iconTint="@color/black"/>
+    <item
+        android:id="@+id/menuContactUs"
+        android:title="Contact Us"/>
     <item
         android:id="@+id/exitMenuItem"
         android:icon="@drawable/exit_icon"
-        android:title="Exit" />
+        android:title="Exit"/>
 
 </menu>

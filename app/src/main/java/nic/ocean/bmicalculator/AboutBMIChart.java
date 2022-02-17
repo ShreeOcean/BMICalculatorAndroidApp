@@ -17,10 +17,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import nic.ocean.bmicalculator.databinding.AboutAppPopupBinding;
+import nic.ocean.bmicalculator.databinding.AboutBmiChartBinding;
+import nic.ocean.bmicalculator.databinding.AboutDeveloperMenuBinding;
 
-public class AboutApp extends AppCompatActivity {
+public class AboutBMIChart extends AppCompatActivity {
 
-    private AboutAppPopupBinding bindingAboutApp;
+    private AboutBmiChartBinding bindingAboutDBMIChart;
     Context context;
     boolean doubleBackToExitPressedOnce = false;
     private AlertDialog.Builder dialogBuilder;
@@ -30,8 +32,8 @@ public class AboutApp extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        bindingAboutApp = AboutAppPopupBinding.inflate(getLayoutInflater());
-        setContentView(bindingAboutApp.getRoot());
+        bindingAboutDBMIChart = AboutBmiChartBinding.inflate(getLayoutInflater());
+        setContentView(bindingAboutDBMIChart.getRoot());
         context = this;
 
 
@@ -70,23 +72,29 @@ public class AboutApp extends AppCompatActivity {
         int itemId = item.getItemId();
         switch (itemId){
             case R.id.homeMenu:
-                Intent intentHome = new Intent(AboutApp.this, MainActivity.class);
+                Intent intentHome = new Intent(AboutBMIChart.this, MainActivity.class);
                 startActivity(intentHome);
                 break;
             case R.id.aboutAppMenuItem:
-                Toast.makeText(context, "This is About App", Toast.LENGTH_SHORT).show();
-                bindingAboutApp.btnGotIt.setOnClickListener(view -> {Intent intent = new Intent(AboutApp.this,MainActivity.class);});
+                Intent intentAboutApp = new Intent(AboutBMIChart.this, AboutApp.class);
+                startActivity(intentAboutApp);
                 break;
             case R.id.menuAboutDev:
-                Intent intentAboutDev = new Intent(AboutApp.this, AboutDev.class);
-                startActivity(intentAboutDev);
+                Intent intent = new Intent(AboutBMIChart.this, AboutDev.class);
+                startActivity(intent);
                 break;
             case R.id.bmiChartMenuItem:
-                Intent intentbmichart = new Intent(AboutApp.this, AboutBMIChart.class);
-                startActivity(intentbmichart);
+                Toast.makeText(context, "This is BMI Chart !!!", Toast.LENGTH_SHORT).show();
+                bindingAboutDBMIChart.btnGotItBmiChart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(AboutBMIChart.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
                 break;
             case R.id.menuContactUs:
-                Intent intentConUs = new Intent(AboutApp.this, MenuContactUs.class);
+                Intent intentConUs = new Intent(AboutBMIChart.this,MenuContactUs.class);
                 startActivity(intentConUs);
                 break;
             case R.id.exitMenuItem:
