@@ -170,7 +170,7 @@ public class MenuContactUs extends AppCompatActivity implements View.OnClickList
         }
     }
     private void doCall() {
-        Intent intentCall = new Intent(Intent.ACTION_CALL, Uri.parse("tel:9625033237"));
+        Intent intentCall = new Intent(Intent.ACTION_CALL, Uri.parse("tel:8093478746"));
         startActivity(intentCall);
     }
     @Override
