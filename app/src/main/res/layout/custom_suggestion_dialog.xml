@@ -7,7 +7,8 @@
     <EditText
         android:id="@+id/et_get_suggestion"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
+        android:layout_margin="30dp"
         android:lines="@integer/material_motion_duration_long_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

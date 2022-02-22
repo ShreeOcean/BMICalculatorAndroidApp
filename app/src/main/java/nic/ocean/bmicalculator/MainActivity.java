@@ -14,6 +14,8 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -21,12 +23,14 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import nic.ocean.bmicalculator.databinding.AboutAppPopupBinding;
 import nic.ocean.bmicalculator.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener, AdapterView.OnItemSelectedListener {
 
     TextView tvGender,tvResultBmi,tvSuggestion, tvAboutApp, tvAboutBmiChart;
     ImageButton cross;
@@ -37,6 +41,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     RadioButton rb_gender;
     Context context;
     private String gender = "";
+    String[] heightUnit = {"cm","ft"};
+    String[] weightUnit = {"kg","lb"};
+
+    //Spinner , weightUnitSpinner;
 
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog alertDialog;
@@ -44,10 +52,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     boolean doubleBackToExitPressedOnce = false;
 
+    ActivityMainBinding mainBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
+
+        mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(mainBinding.getRoot());
 
         context = this;
         etHeight = findViewById(R.id.etHeight);
@@ -64,7 +77,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnCalculate.setOnClickListener(this);
         btnClear.setOnClickListener(this);
 
+//        mainBinding.spinnerHeightUnit.setOnItemClickListener((AdapterView.OnItemClickListener) this);
+//        mainBinding.spinnerWeightUnit.setOnItemClickListener((AdapterView.OnItemClickListener) this);
+
+//        ArrayAdapter adheightUnitSpinner
+//                = new ArrayAdapter(
+//                this,
+//                android.R.layout.simple_spinner_item,
+//                heightUnit);
+//
+//        // set simple layout resource file
+//        // for each item of spinner
+//        adheightUnitSpinner.setDropDownViewResource(
+//                android.R.layout
+//                        .simple_spinner_dropdown_item);
+//
+//        // Set the ArrayAdapter (ad) data on the
+//        // Spinner which binds data to spinner
+//        bindingMain.spinnerHeightUnit.setAdapter(adheightUnitSpinner);
+//
+//        ArrayAdapter adweightUnitSpinner
+//                = new ArrayAdapter(
+//                this,
+//                android.R.layout.simple_spinner_item,
+//                weightUnit);
+//
+//        // set simple layout resource file
+//        // for each item of spinner
+//        adweightUnitSpinner.setDropDownViewResource(
+//                android.R.layout
+//                        .simple_spinner_dropdown_item);
+//
+//        // Set the ArrayAdapter (ad) data on the
+//        // Spinner which binds data to spinner
+//        bindingMain.spinnerWeightUnit.setAdapter(adweightUnitSpinner);
+
     }
+
+
 
 
     //double back press to exit
@@ -341,4 +391,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+        Toast.makeText(getApplicationContext(), heightUnit[position], Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), weightUnit[position], Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 }

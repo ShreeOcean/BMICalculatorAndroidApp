@@ -24,14 +24,17 @@ import android.widget.Toast;
 
 import nic.ocean.bmicalculator.databinding.AboutAppPopupBinding;
 import nic.ocean.bmicalculator.databinding.ActivityMenuContactUsBinding;
+import nic.ocean.bmicalculator.databinding.CustomSuggestionDialogBinding;
 
 public class MenuContactUs extends AppCompatActivity implements View.OnClickListener{
 
     private ActivityMenuContactUsBinding menuContactUsBinding;
+    private CustomSuggestionDialogBinding suggestionDialogBinding;
     Context context;
     boolean doubleBackToExitPressedOnce = false;
     private AlertDialog.Builder dialogBuilder;
     private String[] PERMISSION = new String[]{Manifest.permission.CALL_PHONE};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,8 @@ public class MenuContactUs extends AppCompatActivity implements View.OnClickList
         menuContactUsBinding.btnDial.setOnClickListener(this);
         menuContactUsBinding.btnEmail.setOnClickListener(this);
         menuContactUsBinding.btnSuggestion.setOnClickListener(this);
+//        suggestionDialogBinding.btnCancelSuggest.setOnClickListener(this);
+//        suggestionDialogBinding.btnSubmitSuggest.setOnClickListener(this);
     }
 
     //double back press to exit
@@ -164,9 +169,10 @@ public class MenuContactUs extends AppCompatActivity implements View.OnClickList
                 ViewGroup viewGroup = findViewById(android.R.id.content);
                 View dialogView = LayoutInflater.from(view.getContext()).inflate(R.layout.custom_suggestion_dialog, viewGroup, false);
                 builder.setView(dialogView);
-                AlertDialog alertDialog = builder.create();
+                AlertDialog  alertDialog = builder.create();
                 alertDialog.show();
                 break;
+
         }
     }
     private void doCall() {
@@ -178,7 +184,7 @@ public class MenuContactUs extends AppCompatActivity implements View.OnClickList
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 1){
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                // TODO: DO UR JOB
+
                 doCall();
 
             }else {

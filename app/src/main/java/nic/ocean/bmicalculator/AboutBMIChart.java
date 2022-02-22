@@ -1,5 +1,6 @@
 package nic.ocean.bmicalculator;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +10,9 @@ import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +31,7 @@ public class AboutBMIChart extends AppCompatActivity {
     boolean doubleBackToExitPressedOnce = false;
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog alertDialog;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,7 +41,24 @@ public class AboutBMIChart extends AppCompatActivity {
         setContentView(bindingAboutDBMIChart.getRoot());
         context = this;
 
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setTitle(R.string.app_name);
+        progressDialog.setMessage("Loading... Please Wait");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
+        bindingAboutDBMIChart.webView.loadUrl("https://en.wikipedia.org/wiki/Body_mass_index");
+        bindingAboutDBMIChart.webView.setWebViewClient(new MyWebViewClient());
+
+    }
+
+    class MyWebViewClient extends WebViewClient {
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            bindingAboutDBMIChart.progressbar.setVisibility(View.GONE);
+            progressDialog.hide();
+        }
     }
 
     //double back press to exit
@@ -85,13 +107,13 @@ public class AboutBMIChart extends AppCompatActivity {
                 break;
             case R.id.bmiChartMenuItem:
                 Toast.makeText(context, "This is BMI Chart !!!", Toast.LENGTH_SHORT).show();
-                bindingAboutDBMIChart.btnGotItBmiChart.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(AboutBMIChart.this, MainActivity.class);
-                        startActivity(intent);
-                    }
-                });
+//                bindingAboutDBMIChart.btnGotItBmiChart.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Intent intent = new Intent(AboutBMIChart.this, MainActivity.class);
+//                        startActivity(intent);
+//                    }
+//                });
                 break;
             case R.id.menuContactUs:
                 Intent intentConUs = new Intent(AboutBMIChart.this,MenuContactUs.class);
