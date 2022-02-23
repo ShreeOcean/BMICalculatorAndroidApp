@@ -27,6 +27,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import nic.ocean.bmicalculator.databinding.AboutAppPopupBinding;
 import nic.ocean.bmicalculator.databinding.ActivityMainBinding;
 
@@ -38,17 +40,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText etHeight,etWeight;
     Button btnCalculate,btnClear, btnGotIt;
     RadioGroup rg_gender;
-    RadioButton rb_gender;
+    RadioButton rb_gender, rb_unitType;
     Context context;
-    private String gender = "";
-    String[] heightUnit = {"cm","ft"};
-    String[] weightUnit = {"kg","lb"};
+    private String gender = "", unitMeasureType = "";
+    int positionHeightUnitSpinnerCM,positionHeightUnitSpinnerFT,positionWeightUnitSpinnerKG,positionWeightUnitSpinnerLB;
+//    String[] heightUnit = {"cm","ft"};
+//    String[] weightUnit = {"kg","lb"};
 
     //Spinner , weightUnitSpinner;
 
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog alertDialog;
-    private ActivityMainBinding bindingMain;
 
     boolean doubleBackToExitPressedOnce = false;
 
@@ -76,6 +78,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rg_gender.setOnCheckedChangeListener(this);
         btnCalculate.setOnClickListener(this);
         btnClear.setOnClickListener(this);
+
+
+        ArrayList<String> heightUnit = new ArrayList<>();
+        heightUnit.add("cm");
+        heightUnit.add("ft");
+        ArrayAdapter<String> arrayAdapterHeight = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, heightUnit);
+        arrayAdapterHeight.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mainBinding.spinnerHeightUnit.setAdapter(arrayAdapterHeight);
+
+        ArrayList<String> weightUnit = new ArrayList<>();
+        weightUnit.add("kg");
+        weightUnit.add("lb");
+        ArrayAdapter<String> arrayAdapterWeight = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, weightUnit);
+        arrayAdapterHeight.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mainBinding.spinnerWeightUnit.setAdapter(arrayAdapterWeight);
+
+        positionHeightUnitSpinnerCM = arrayAdapterHeight.getPosition("cm");
+        positionHeightUnitSpinnerFT = arrayAdapterHeight.getPosition("ft");
+        positionWeightUnitSpinnerKG = arrayAdapterHeight.getPosition("kg");
+        positionWeightUnitSpinnerLB = arrayAdapterHeight.getPosition("lb");
+
+        mainBinding.rgUnitSystem.setOnCheckedChangeListener((radioGroup, i) -> {
+            rb_unitType = findViewById(i);
+            if (rb_unitType == null)return;
+            unitMeasureType = rb_unitType.getText().toString();
+        });
+
 
 //        mainBinding.spinnerHeightUnit.setOnItemClickListener((AdapterView.OnItemClickListener) this);
 //        mainBinding.spinnerWeightUnit.setOnItemClickListener((AdapterView.OnItemClickListener) this);
@@ -202,82 +231,82 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alertDialog.show();
 
     }
-
-    private void aboutBmiChartMenu() {
-
-//        dialogBuilder = new AlertDialog.Builder(this);
-//        final View  aboutBMIChartMenu = getLayoutInflater().inflate(R.layout.about_bmi_chart, null);
-//        //
-//        // cross = aboutBMIChartMenu.findViewById(R.id.imageBtnClose);
-//        btnGotIt = aboutBMIChartMenu.findViewById(R.id.btnGotItBmiChart);
-//        dialogBuilder.setView(aboutBMIChartMenu);
-//        alertDialog = dialogBuilder.create();
-//        alertDialog.show();
-
-//        Intent intent = new Intent(MainActivity.this, AboutBMIChart.class);
-//        startActivity(intent);
-
-//        cross.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                alertDialog.dismiss();
-//            }
-//        });
-//        btnGotIt.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                alertDialog.dismiss();
-//            }
-//        });
-    }
-
-    private void aboutDeveloperMenu() {
-
-
-//        dialogBuilder = new AlertDialog.Builder(this);
-//        final View  aboutDevMenu = getLayoutInflater().inflate(R.layout.about_developer_menu, null);
-//        dialogBuilder.setView(aboutDevMenu);
-//        alertDialog = dialogBuilder.create();
-//        alertDialog.show();
 //
-//        cross = aboutDevMenu.findViewById(R.id.imageBtnClose);
+//    private void aboutBmiChartMenu() {
 //
-//        cross.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                alertDialog.dismiss();
-//            }
-//        });
-
-    }
-
-    private void aboutAppMenuOnClick() {
-
-
-
-
 ////        dialogBuilder = new AlertDialog.Builder(this);
-//        final View  aboutAppMenu = getLayoutInflater().inflate(R.layout.about_app_popup, null);
-//        dialogBuilder.setView(aboutAppMenu);
-//        alertDialog = dialogBuilder.create();
-//        alertDialog.show();
+////        final View  aboutBMIChartMenu = getLayoutInflater().inflate(R.layout.about_bmi_chart, null);
+////        //
+////        // cross = aboutBMIChartMenu.findViewById(R.id.imageBtnClose);
+////        btnGotIt = aboutBMIChartMenu.findViewById(R.id.btnGotItBmiChart);
+////        dialogBuilder.setView(aboutBMIChartMenu);
+////        alertDialog = dialogBuilder.create();
+////        alertDialog.show();
 //
-//        cross = aboutAppMenu.findViewById(R.id.imageBtnClose);
-//        btnGotIt = aboutAppMenu.findViewById(R.id.btnGotIt);
+////        Intent intent = new Intent(MainActivity.this, AboutBMIChart.class);
+////        startActivity(intent);
 //
-//        cross.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                alertDialog.dismiss();
-//            }
-//        });
-//        btnGotIt.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                alertDialog.dismiss();
-//            }
-//        });
-    }
+////        cross.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View view) {
+////                alertDialog.dismiss();
+////            }
+////        });
+////        btnGotIt.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View view) {
+////                alertDialog.dismiss();
+////            }
+////        });
+//    }
+//
+//    private void aboutDeveloperMenu() {
+//
+//
+////        dialogBuilder = new AlertDialog.Builder(this);
+////        final View  aboutDevMenu = getLayoutInflater().inflate(R.layout.about_developer_menu, null);
+////        dialogBuilder.setView(aboutDevMenu);
+////        alertDialog = dialogBuilder.create();
+////        alertDialog.show();
+////
+////        cross = aboutDevMenu.findViewById(R.id.imageBtnClose);
+////
+////        cross.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View view) {
+////                alertDialog.dismiss();
+////            }
+////        });
+//
+//    }
+//
+//    private void aboutAppMenuOnClick() {
+//
+//
+//
+//
+//////        dialogBuilder = new AlertDialog.Builder(this);
+////        final View  aboutAppMenu = getLayoutInflater().inflate(R.layout.about_app_popup, null);
+////        dialogBuilder.setView(aboutAppMenu);
+////        alertDialog = dialogBuilder.create();
+////        alertDialog.show();
+////
+////        cross = aboutAppMenu.findViewById(R.id.imageBtnClose);
+////        btnGotIt = aboutAppMenu.findViewById(R.id.btnGotIt);
+////
+////        cross.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View view) {
+////                alertDialog.dismiss();
+////            }
+////        });
+////        btnGotIt.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View view) {
+////                alertDialog.dismiss();
+////            }
+////        });
+//    }
 
     //method to calculate bmi value
     private float calculateBMI(float weightF, float heightF) {
@@ -315,13 +344,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
 
-//        if (radioGroup.getCheckedRadioButtonId() == -1){
-//            Toast.makeText(context, "Select your Gender !!!", Toast.LENGTH_SHORT).show();
-//        }
-//        else {
-//            rb_gender = findViewById(i);
-//            Toast.makeText(context, rb_gender.getText().toString(), Toast.LENGTH_SHORT).show();
-//        }
         rb_gender = findViewById(i);
 //        Toast.makeText(context, radioButton.getText().toString(), Toast.LENGTH_SHORT).show();
         if (rb_gender == null)return;
@@ -393,8 +415,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        Toast.makeText(getApplicationContext(), heightUnit[position], Toast.LENGTH_SHORT).show();
-        Toast.makeText(getApplicationContext(), weightUnit[position], Toast.LENGTH_SHORT).show();
+
+        if (unitMeasureType == "MKS"){
+
+            mainBinding.spinnerWeightUnit.setSelection(positionWeightUnitSpinnerKG);
+            mainBinding.spinnerHeightUnit.setSelection(positionHeightUnitSpinnerCM);
+
+        }else if (unitMeasureType == "FPS"){
+
+            mainBinding.spinnerHeightUnit.setSelection(positionHeightUnitSpinnerFT);
+            mainBinding.spinnerWeightUnit.setSelection(positionWeightUnitSpinnerLB);
+        }
+
     }
 
     @Override
