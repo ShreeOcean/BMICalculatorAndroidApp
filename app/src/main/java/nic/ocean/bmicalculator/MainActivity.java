@@ -80,30 +80,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnClear.setOnClickListener(this);
 
 
-        ArrayList<String> heightUnit = new ArrayList<>();
-        heightUnit.add("cm");
-        heightUnit.add("ft");
-        ArrayAdapter<String> arrayAdapterHeight = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, heightUnit);
-        arrayAdapterHeight.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mainBinding.spinnerHeightUnit.setAdapter(arrayAdapterHeight);
-
-        ArrayList<String> weightUnit = new ArrayList<>();
-        weightUnit.add("kg");
-        weightUnit.add("lb");
-        ArrayAdapter<String> arrayAdapterWeight = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, weightUnit);
-        arrayAdapterHeight.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mainBinding.spinnerWeightUnit.setAdapter(arrayAdapterWeight);
-
-        positionHeightUnitSpinnerCM = arrayAdapterHeight.getPosition("cm");
-        positionHeightUnitSpinnerFT = arrayAdapterHeight.getPosition("ft");
-        positionWeightUnitSpinnerKG = arrayAdapterHeight.getPosition("kg");
-        positionWeightUnitSpinnerLB = arrayAdapterHeight.getPosition("lb");
-
-        mainBinding.rgUnitSystem.setOnCheckedChangeListener((radioGroup, i) -> {
-            rb_unitType = findViewById(i);
-            if (rb_unitType == null)return;
-            unitMeasureType = rb_unitType.getText().toString();
-        });
+//        ArrayList<String> heightUnit = new ArrayList<>();
+//        heightUnit.add("cm");
+//        heightUnit.add("ft");
+//        ArrayAdapter<String> arrayAdapterHeight = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, heightUnit);
+//        arrayAdapterHeight.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        mainBinding.spinnerHeightUnit.setAdapter(arrayAdapterHeight);
+//
+//        ArrayList<String> weightUnit = new ArrayList<>();
+//        weightUnit.add("kg");
+//        weightUnit.add("lb");
+//        ArrayAdapter<String> arrayAdapterWeight = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, weightUnit);
+//        arrayAdapterHeight.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        mainBinding.spinnerWeightUnit.setAdapter(arrayAdapterWeight);
+//
+//        positionHeightUnitSpinnerCM = arrayAdapterHeight.getPosition("cm");
+//        positionHeightUnitSpinnerFT = arrayAdapterHeight.getPosition("ft");
+//        positionWeightUnitSpinnerKG = arrayAdapterHeight.getPosition("kg");
+//        positionWeightUnitSpinnerLB = arrayAdapterHeight.getPosition("lb");
+//
+//        mainBinding.rgUnitSystem.setOnCheckedChangeListener((radioGroup, i) -> {
+//            rb_unitType = findViewById(i);
+//            if (rb_unitType == null)return;
+//            unitMeasureType = rb_unitType.getText().toString();
+//        });
 
 
 //        mainBinding.spinnerHeightUnit.setOnItemClickListener((AdapterView.OnItemClickListener) this);
@@ -416,16 +416,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
-        if (unitMeasureType == "MKS"){
-
-            mainBinding.spinnerWeightUnit.setSelection(positionWeightUnitSpinnerKG);
-            mainBinding.spinnerHeightUnit.setSelection(positionHeightUnitSpinnerCM);
-
-        }else if (unitMeasureType == "FPS"){
-
-            mainBinding.spinnerHeightUnit.setSelection(positionHeightUnitSpinnerFT);
-            mainBinding.spinnerWeightUnit.setSelection(positionWeightUnitSpinnerLB);
-        }
+//        if (unitMeasureType == "MKS"){
+//
+//            mainBinding.spinnerWeightUnit.setSelection(positionWeightUnitSpinnerKG);
+//            mainBinding.spinnerHeightUnit.setSelection(positionHeightUnitSpinnerCM);
+//
+//        }else if (unitMeasureType == "FPS"){
+//
+//            mainBinding.spinnerHeightUnit.setSelection(positionHeightUnitSpinnerFT);
+//            mainBinding.spinnerWeightUnit.setSelection(positionWeightUnitSpinnerLB);
+//        }
 
     }
 
